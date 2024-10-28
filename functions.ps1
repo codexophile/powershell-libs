@@ -69,15 +69,10 @@ function ConvertTo-Seconds {
     param (
         [string]$Time # input time in the format of HH:MM:SS
     )
-    Write-Host $Time
     $Time -match '^(\d+?):(\d+?):(\d+?)($|-)'
-    [int]$HoursInSeconds = $Matches[1] * 60 * 60
-    [int]$MinutesInSeconds = $Matches[2] * 60
-    [int]$SecondsInSeconds = $Matches[3]
-    Write-Host $HoursInSeconds 
-    Write-Host $MinutesInSeconds
-    Write-Host $SecondsInSeconds
-    pause
+    [int]$HoursInSeconds = [int]$Matches[1] * 60 * 60
+    [int]$MinutesInSeconds = [int]$Matches[2] * 60
+    [int]$SecondsInSeconds = [int]$Matches[3]
     [int]$TotalSeconds = $HoursInSeconds + $MinutesInSeconds + $SecondsInSeconds
     return $TotalSeconds
 }

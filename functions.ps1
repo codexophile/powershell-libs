@@ -69,7 +69,7 @@ function ConvertTo-Seconds {
     param (
         [string]$Time # input time in the format of HH:MM:SS
     )
-    $Time -match '^(\d+?):(\d+?):(\d+?)($|-)'
+    $null = $Time -match '^(\d+?):(\d+?):(\d+?)($|-)'
     [int]$HoursInSeconds = [int]$Matches[1] * 60 * 60
     [int]$MinutesInSeconds = [int]$Matches[2] * 60
     [int]$SecondsInSeconds = [int]$Matches[3]
@@ -86,9 +86,9 @@ function Get-UniqueTags {
 
     foreach ($filePath in $FilePaths) {
         # Use regex to find all tags in the format [tag-name]
-        $matches = [regex]::Matches($filePath, "\[\w+\]")
+        $TagsMatches = [regex]::Matches($filePath, "\[\w+\]")
 
-        foreach ($match in $matches) {
+        foreach ($match in $TagsMatches) {
             # Add the tag to the array
             $allTags += $match.Value
         }

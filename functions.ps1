@@ -1,8 +1,3 @@
-#
-# Does stuff
-# @param {body} body 
-#
-
 Add-Type -AssemblyName PresentationCore, PresentationFramework
 Add-Type -AssemblyName System.Windows.Forms
 
@@ -65,6 +60,65 @@ function GuiFromXaml {
 
 #* String functions
 
+function Get-UniqueId {
+    <#
+    .SYNOPSIS
+    Generates a unique alphanumeric identifier (UID) of a specified length.
+
+    .DESCRIPTION
+    This function generates a random alphanumeric string of a specified length.
+    Optionally, a prefix can be added to the ID.
+
+    .PARAMETER Length
+    The length of the unique alphanumeric ID. Default is 10.
+
+    .PARAMETER Prefix
+    An optional prefix to add to the beginning of the ID.
+
+    .EXAMPLE
+    Get-UniqueId
+    Outputs: "a7B9c3E8dF" (Default length: 10)
+
+    .EXAMPLE
+    Get-UniqueId -Length 15 -Prefix "App"
+    Outputs: "App-a7B9c3E8dF2GhY"
+
+    .NOTES
+    Author: Your Name
+    Date: 24-Nov-2024
+    #>
+
+    param (
+        [int]$Length = 10, # Default length of 10
+        [string]$Prefix = '' # Optional prefix
+    )
+
+    # Validate that the length is a positive integer
+    if ($Length -le 0) {
+        throw "Length must be a positive integer."
+    }
+
+    # Define characters to use for the unique ID
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+    # Generate the random alphanumeric ID
+    $randomId = -join ((1..$Length) | ForEach-Object { $characters[(Get-Random -Minimum 0 -Maximum $characters.Length)] })
+
+    # Add prefix if provided
+    if ($Prefix -ne '') {
+        return "$Prefix-$randomId"
+    }
+    else {
+        return $randomId
+    }
+}
+
+# Example usage
+Get-UniqueId                  # Default length of 10
+Get-UniqueId -Length 15       # Custom length of 15
+Get-UniqueId -Length 12 -Prefix "MyApp"  # Custom length with prefix
+
+
 function ConvertTo-Seconds {
     param (
         [string]$Time # input time in the format of HH:MM:SS
@@ -76,6 +130,7 @@ function ConvertTo-Seconds {
     [int]$TotalSeconds = $HoursInSeconds + $MinutesInSeconds + $SecondsInSeconds
     return $TotalSeconds
 }
+
 function Get-UniqueTags {
     param (
         [string[]]$FilePaths

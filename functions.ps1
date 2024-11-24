@@ -106,7 +106,7 @@ function Get-UniqueId {
 
     # Add prefix if provided
     if ($Prefix -ne '') {
-        return "$Prefix-$randomId"
+        return "$Prefix$randomId"
     }
     else {
         return $randomId

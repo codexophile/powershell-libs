@@ -113,12 +113,6 @@ function Get-UniqueId {
     }
 }
 
-# Example usage
-Get-UniqueId                  # Default length of 10
-Get-UniqueId -Length 15       # Custom length of 15
-Get-UniqueId -Length 12 -Prefix "MyApp"  # Custom length with prefix
-
-
 function ConvertTo-Seconds {
     param (
         [string]$Time # input time in the format of HH:MM:SS
